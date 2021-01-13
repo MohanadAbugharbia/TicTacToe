@@ -1,6 +1,6 @@
 import socket
 import threading
-#from _thread import *
+
 def check_winner():
 	won = False
 	winner = ""
