@@ -17,7 +17,7 @@ grid = Grid()
 
 running = True
 
-#host = '18.185.172.166'
+
 host = '127.0.0.1'
 port = 5555
 

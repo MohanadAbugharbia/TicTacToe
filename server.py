@@ -45,7 +45,6 @@ def create_thread(target):
 	thread.start()
 
 
-#host = '167.172.156.226'
 host = '127.0.0.1'
 port = 5555
 
