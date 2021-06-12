@@ -1,8 +1,8 @@
 import pygame
 import os
 
-letterX = pygame.image.load(r'C:/Users/Lenovo/python/TicTacToe/client/res/letterX.png')
-letterO = pygame.image.load(r'C:/Users/Lenovo/python/TicTacToe/client/res/letterO.png')
+letterX = pygame.image.load(r'res/letterX.BMP')
+letterO = pygame.image.load(r'res/letterO.BMP')
 
 class Grid:
 	def __init__(self):

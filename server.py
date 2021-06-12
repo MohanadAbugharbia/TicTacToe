@@ -29,7 +29,7 @@ def check_winner():
 		winning_Player = "Player 2"
 	
 	if won == True:
-		print (winning_Player + " has won the match!")
+		print (f"{winning_Player} has won the match!")
 		return  winner
 
 def rules(tiles_taken):
@@ -104,13 +104,11 @@ def receive_data(conn1, conn2):
 	conn2.close()
 	print("Clients disconnected")
 
-	
-
 def waiting_for_connection():
 	conn1, addr1 = sock.accept()
-	print("Client is connected " + str(addr1[0]) + ":" + str(addr1[1]))
+	print(f"client is connected {addr1[0]} : {addr1[1]}")
 	conn2, addr2 = sock.accept()
-	print("Client is connected " + str(addr2[0]) + ":" + str(addr2[1]))
+	print(f"client is connected {addr2[0]} : {addr2[1]}")
 	connection_established = True
 	game_start(conn1, conn2)
 	receive_data(conn1, conn2)
