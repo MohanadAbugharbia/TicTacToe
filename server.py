@@ -94,14 +94,8 @@ def receive_data(conn1, conn2):
 				break
 		if tiles_taken != 9:
 			if player == "X":
-				#command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
-				#conn2.send(command)
-				#data = conn2.recv(1024).decode()
 				data = send_data_AND_await_response(conn2, x, y, player)
 			else:
-				#command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
-				#conn1.send(command)
-				#data = conn1.recv(1024).decode()
 				data = send_data_AND_await_response(conn1, x, y, player)
 		elif ruling == False:
 			command = f"{x}-{y}-True-{player}-draw".encode()
