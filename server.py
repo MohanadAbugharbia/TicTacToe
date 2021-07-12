@@ -4,24 +4,24 @@ import threading
 def check_for_winner():
 	game_has_been_won = False
 	winner = ""
-	if gameTable[0][0] == gameTable[1][1] == gameTable[2][2] != " ":
+	if game_board[0][0] == game_board[1][1] == game_board[2][2] != " ":
 		print("Congratulations")
 		game_has_been_won = True
-		winner = gameTable[0][0]
-	if gameTable[0][2] == gameTable[1][1] == gameTable[2][0] != " ":
+		winner = game_board[0][0]
+	if game_board[0][2] == game_board[1][1] == game_board[2][0] != " ":
 		print("Congratulations")
 		game_has_been_won = True
-		winner = gameTable[0][2]
+		winner = game_board[0][2]
 	for x in range(3):
-		if gameTable[x][0] == gameTable[x][1] == gameTable[x][2] != " ":
+		if game_board[x][0] == game_board[x][1] == game_board[x][2] != " ":
 			print("Congratulations")
 			game_has_been_won= True
-			winner = gameTable[x][0]
+			winner = game_board[x][0]
 			break
-		if gameTable[0][x] == gameTable[1][x] == gameTable[2][x] != " ":
+		if game_board[0][x] == game_board[1][x] == game_board[2][x] != " ":
 			print("Congratulations")
 			game_has_been_won= True
-			winner = gameTable[0][x]
+			winner = game_board[0][x]
 			break
 	if winner == "X":
 		winning_Player = "Player 1"
@@ -61,38 +61,50 @@ def game_start(conn1, conn2):
 	conn1.send(p1_info)
 	conn2.send(p2_info)
 
-def check_input(x, y, player):
-	if gameTable[x][y] == " ":
-		gameTable[x][y] = player
+def write_onto_the_game_board(x, y, player):
+	if game_board[x][y] == " ":
+		game_board[x][y] = player
 		return True
+
+
+def send_data_AND_await_response(connection, x, y, player):
+	command = f"{x}-{y}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
+	connection.send(command)
+	return connection.recv(1024).decode()
+
 
 def receive_data(conn1, conn2):
 	data = conn1.recv(1024).decode()
 	tiles_taken = 0
 	while True:
 		data = data.split('-') # x, y, player
+		x = int(data[0])
+		y = int(data[1])
 		player = str(data[2])
-		check_input(int(data[0]), int(data[1]), player)
+
+		write_onto_the_game_board(int(data[0]), int(data[1]), player)
 		tiles_taken += 1
-		print(gameTable)
+		print(game_board)
 		ruling = check_winning_rules()
 		if ruling == 'X' or ruling == 'O':
 				print(ruling)
-				command = '{}-{}-{}-{}-{}'.format(data[0], data[1], "True", player, "gameover").encode()
+				command = f"{x}-{y}-True-{player}-gameover".encode()
 				conn1.send(command)
 				conn2.send(command)
 				break
 		if tiles_taken != 9:
 			if player == "X":
-				command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
-				conn2.send(command)
-				data = conn2.recv(1024).decode()
+				#command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
+				#conn2.send(command)
+				#data = conn2.recv(1024).decode()
+				data = send_data_AND_await_response(conn2, x, y, player)
 			else:
-				command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
-				conn1.send(command)
-				data = conn1.recv(1024).decode()
+				#command = f"{data[0]}-{data[1]}-True-{player}-keepplaying".encode() # x, y, True, yourturn, player
+				#conn1.send(command)
+				#data = conn1.recv(1024).decode()
+				data = send_data_AND_await_response(conn1, x, y, player)
 		elif ruling == False:
-			command = '{}-{}-{}-{}-{}'.format(data[0], data[1], "True", player, "draw").encode()
+			command = f"{x}-{y}-True-{player}-draw".encode()
 			conn1.send(command)
 			conn2.send(command)
 			print("Draw")
@@ -115,6 +127,6 @@ def waiting_for_connection():
 
 create_thread(waiting_for_connection)
 
-gameTable = [[" " for i in range(3)] for j in range(3)]
+game_board = [[" " for i in range(3)] for j in range(3)]
 while True:
 	pass
