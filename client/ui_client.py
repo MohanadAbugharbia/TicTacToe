@@ -15,9 +15,6 @@ surface = pygame.display.set_mode((675, 675))
 pygame.display.set_caption('Tic-tac-toe')
 grid = Grid()
 
-running = True
-
-
 host = '127.0.0.1'
 port = 5555
 
@@ -34,7 +31,8 @@ else:
 	turn = "False"
 	player = "O"
 
-print("I am player: " + player)
+print(f"I am player: {player}")
+pygame.display.set_caption(f'Tic-tac-toe player {player}')
 
 def receive_data():
 	global turn, running
@@ -43,8 +41,7 @@ def receive_data():
 		data = data.split('-')
 		grid.get_mouse(int(data[1]), int(data[0]), str(data[3]))
 		if data[4] == "gameover":
-			print("Good game, player " + data[3] + " has won the game.")
-
+			print(f"Good game, player {data[3]} has won the game.")
 			break
 		if data[4] == "draw":
 			print("The game comes to a draw")
@@ -52,6 +49,9 @@ def receive_data():
 		turn = str(data[2])
 
 create_thread(receive_data)
+
+
+running = True
 while running:
 
 	for event in pygame.event.get():
