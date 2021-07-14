@@ -34,12 +34,6 @@ else:
 print(f"I am player: {player}")
 pygame.display.set_caption(f'Tic-tac-toe player {player}')
 
-black_color = (0, 0, 0)
-pygame.font.init()
-font = pygame.font.Font(None, 25)
-text = font.render("Hello there", True, black_color)
-surface.blit(text, (0,0))
-
 def receive_data():
 	global turn, running
 	while True:
