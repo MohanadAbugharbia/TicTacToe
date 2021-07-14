@@ -3,27 +3,31 @@ import os
 
 class Grid:
 	def __init__(self):
-		self.grid_lines = [	((0, 225), (675, 225)), #first horizontal line
-							((0, 450), (675, 450)), #second horizontal line
-							((225, 0), (225, 675)), #first vertical line
-							((450, 0), (450, 675))] #second vertical line
+		self.grid_lines = [
+							((  0, 200), (400, 200)), #first horizontal line
+							((  0, 333), (400, 333)), #second horizontal line
+							((  0, 466), (400, 466)), #third horizontal line
+							((133, 200), (133, 600)), #first vertical line
+							((266, 200), (266, 600))] #second vertical line
 		self.grid = [[0 for x in range(3)] for y in range(3)]
 
 	def draw(self, surface):
 		red_color = (255, 0, 0)
+		black_color = (0, 0, 0)
+		white_color = (255, 255, 255)
+		surface.fill(white_color)
+		
 		for line in self.grid_lines:
-			pygame.draw.line(surface, (200, 200, 200), line[0], line[1], 2)
+			pygame.draw.line(surface, black_color, line[0], line[1], 2)
 
 		for y in range(len(self.grid)):
 			for x in range(len(self.grid[y])):
 				if self.get_cell_value(x, y) == "X":
-					#surface.blit(letterX, (x*225, y*225))
-					pygame.draw.line(surface, red_color, (x*225, y*225), (x*225 + 225, y*225 + 225), 2)
-					pygame.draw.line(surface, red_color, (x*225 + 225, y*225), (x*225, y*225 + 225), 2)
+					pygame.draw.line(surface, red_color, (x*133, y*133 + 200), (x*133 + 133, y*133 + 333), 2)
+					pygame.draw.line(surface, red_color, (x*133 + 133, y*133+ 200), (x*133, y*133 + 333), 2)
 
 				elif self.get_cell_value(x, y) == "O":
-					#surface.blit(letterO, (x*225, y*225))
-					pygame.draw.circle(surface, red_color, (x*225 + 112, y*225 + 112), 112, 2)
+					pygame.draw.circle(surface, red_color, (x*133 + 66, y*133 + 266), 66, 2)
 
 	def get_cell_value(self, x, y):
 		return self.grid[y][x]

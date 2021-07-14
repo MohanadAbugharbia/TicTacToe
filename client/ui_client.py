@@ -10,8 +10,8 @@ def create_thread(target):
 	thread.start()
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '650, 250'
-
-surface = pygame.display.set_mode((675, 675))
+size = (400, 600)
+surface = pygame.display.set_mode(size)
 pygame.display.set_caption('Tic-tac-toe')
 grid = Grid()
 
@@ -34,6 +34,12 @@ else:
 print(f"I am player: {player}")
 pygame.display.set_caption(f'Tic-tac-toe player {player}')
 
+black_color = (0, 0, 0)
+pygame.font.init()
+font = pygame.font.Font(None, 25)
+text = font.render("Hello there", True, black_color)
+surface.blit(text, (0,0))
+
 def receive_data():
 	global turn, running
 	while True:
@@ -52,6 +58,8 @@ create_thread(receive_data)
 
 
 running = True
+clock=pygame.time.Clock()
+
 while running:
 
 	for event in pygame.event.get():
@@ -62,12 +70,13 @@ while running:
 			if pygame.mouse.get_pressed()[0]:
 				if turn == "True":
 					pos = pygame.mouse.get_pos()
-					if grid.get_mouse(pos[0] // 225, pos[1] // 225, player):
-						send_data = '{}-{}-{}'.format(pos[1] // 225, pos[0] // 225, player).encode()
-						sock.send(send_data)
-						turn = "False"
-					else:
-						print("tile taken")
-	surface.fill((0,0,0))
+					if pos[1] >= 200:
+						if grid.get_mouse(pos[0] // 133, (pos[1] - 200) // 133, player):
+							send_data = '{}-{}-{}'.format((pos[1] - 200) // 133, pos[0] // 133, player).encode()
+							sock.send(send_data)
+							turn = "False"
+						else:
+							print("tile taken")
+	clock.tick(20)
 	grid.draw(surface)
 	pygame.display.flip()
