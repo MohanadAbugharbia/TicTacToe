@@ -78,7 +78,6 @@ def game_start(player1, player2):
 		turn = str(data[2])
 
 		write_onto_the_game_board(x, y, turn)
-		tiles_taken += 1
 		print(game_board)
 		ruling = check_winning_rules()
 		if ruling == 'X' or ruling == 'O':
@@ -92,6 +91,7 @@ def game_start(player1, player2):
 				data = send_data_AND_wait_for_response(player2, x, y, turn)
 			else:
 				data = send_data_AND_wait_for_response(player1, x, y, turn)
+			tiles_taken += 1
 		elif ruling == False:
 			message = f"{x}-{y}-True-{turn}-draw".encode()
 			player1.send(message)
