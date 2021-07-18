@@ -1,5 +1,6 @@
 import socket
 import threading
+import time
 
 def check_for_winner():
 	game_has_been_won = False
@@ -123,4 +124,4 @@ create_thread(waiting_for_connection)
 
 game_board = [[" " for i in range(3)] for j in range(3)]
 while True:
-	pass
+	time.sleep(100)
