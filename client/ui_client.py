@@ -37,16 +37,20 @@ pygame.display.set_caption(f'Tic-tac-toe player {player}')
 def receive_data():
 	global turn, running
 	while True:
-		data = sock.recv(2048).decode()    # x, y, True, yourturn, player
+		data = sock.recv(2048).decode()    # x, y, turn, player, game_state
 		data = data.split('-')
-		grid.get_mouse(int(data[1]), int(data[0]), str(data[3]))
-		if data[4] == "gameover":
-			print(f"Good game, player {data[3]} has won the game.")
+		x_Position = int(data[0])
+		y_Position = int(data[1])
+		turn = str(data[2])
+		player = data[3]
+		game_state = data[4]
+		grid.get_mouse(y_Position, x_Position, player)
+		if game_state == "gameover":
+			print(f"Good game, player {player} has won the game.")
 			break
-		if data[4] == "draw":
+		if game_state == "draw":
 			print("The game comes to a draw")
 			break
-		turn = str(data[2])
 
 create_thread(receive_data)
 
