@@ -24,13 +24,9 @@ def check_for_winner():
 			game_has_been_won= True
 			winner = game_board[0][x]
 			break
-	if winner == "X":
-		winning_Player = "Player 1"
-	else:
-		winning_Player = "Player 2"
 	
 	if game_has_been_won == True:
-		print (f"{winning_Player} has won the match!")
+		print (f"{winner} has won the match!")
 		return  winner
 
 def check_winning_rules():
@@ -57,6 +53,8 @@ def game_initialistaion(player1, player2):
 	player1.send(p1_info)
 	player2.send(p2_info)
 
+	game_start(player1, player2)
+
 def write_onto_the_game_board(x, y, player):
 	if game_board[x][y] == " ":
 		game_board[x][y] = player
@@ -77,7 +75,6 @@ def game_start(player1, player2):
 		x = int(data[0])
 		y = int(data[1])
 		turn = str(data[2])
-
 		write_onto_the_game_board(x, y, turn)
 		print(game_board)
 		ruling = check_winning_rules()
@@ -110,9 +107,7 @@ def waiting_for_connection():
 	print(f"Player1 is connected {addr1[0]} : {addr1[1]}")
 	player2, addr2 = sock.accept()
 	print(f"Player2 is connected {addr2[0]} : {addr2[1]}")
-	connection_established = True
 	game_initialistaion(player1, player2)
-	game_start(player1, player2)
 
 
 def create_thread(target):
@@ -124,4 +119,4 @@ create_thread(waiting_for_connection)
 
 game_board = [[" " for i in range(3)] for j in range(3)]
 while True:
-	time.sleep(100)
+	time.sleep(1000)
