@@ -39,7 +39,6 @@ def check_winning_rules():
 
 host = '127.0.0.1'
 port = 5555
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((host, port))
 sock.listen(2)
