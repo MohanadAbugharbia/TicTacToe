@@ -80,7 +80,7 @@ class AI:
 		for i in range(3):
 			for j in range(3):
 				if i != 0:
-					new_board[i][j] = old_board[(i*2)+j+i]
+					new_board[i][j] = old_board[(i*3)+j]
 				else:
 					new_board[i][j] = old_board[j]
 		return new_board
