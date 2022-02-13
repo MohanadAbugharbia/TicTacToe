@@ -1,9 +1,6 @@
-import time
 import pygame
 from game import Game
 from AI import AI
-
-start_time = time.time()
 
 game = Game()
 ai = AI()
@@ -45,8 +42,3 @@ while run:
 
 if winner:
     print(f"Player {winner} has won the game!")
-
-end_time = time.time()
-log_file = open("logs.txt", "a")
-log_file.write(f"Time Taken: {round(end_time-start_time, 5)}s\n")
-log_file.close()
