@@ -1,8 +1,8 @@
 from game import Game
-from AI import AI
+from computer import computer_Player
 
 game = Game()
-ai = AI()
+computer = computer_Player()
 
 winner = False
 tiles_taken = 0
@@ -18,9 +18,9 @@ while winner == False:
             break
         if winner:
             break
-        ai_move = ai.make_Move(game)
-        game.make_move('O', ai_move[0], ai_move[1])
-        game.print_game_board(f"O played ({ai_move[0] + 1},{ai_move[1] + 1})")
+        computer_move = computer.make_Move(game)
+        game.make_move('O', computer_move[0], computer_move[1])
+        game.print_game_board(f"O played ({computer_move[0] + 1},{computer_move[1] + 1})")
         winner = game.check_for_winner(game.game_board)
         tiles_taken += 1
         

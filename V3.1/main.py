@@ -1,15 +1,12 @@
-import time
-
-from numpy import tile
 from game import Game
-from AI import AI
+from computer import computer_Player
 from escapesequences import escapesequences
 
-start_time = time.time()
 
 game = Game()
-ai = AI()
+computer = computer_Player()
 es = escapesequences()
+
 def play_again():
     while True:
         answer = input("Do you want to play again? (y/n): ")
@@ -24,7 +21,7 @@ def play_again():
 es.CLEAR()
 es.HOME()
 
-game.print_game_board("Welcome by Tic-Tac-Toe\nYou are player X\n")
+game.print_game_board("Welcome to Tic-Tac-Toe\nYou are player X\n")
 run = True
 while run:
     if game.turn == 'X':
@@ -34,11 +31,11 @@ while run:
         es.HOME()
         game.print_game_board(f"X played ({coordinates[0] + 1},{coordinates[1] + 1})")
     elif game.turn == 'O':
-        ai_move = ai.make_Move(game)
-        game.make_move('O', ai_move[0], ai_move[1])
+        computer_move = computer.make_Move(game)
+        game.make_move('O', computer_move[0], computer_move[1])
         es.CLEAR()
         es.HOME()
-        game.print_game_board(f"O played ({ai_move[0] + 1},{ai_move[1] + 1})")
+        game.print_game_board(f"O played ({computer_move[0] + 1},{computer_move[1] + 1})")
 
     winner = game.check_for_winner(game.game_board)
     if game.tiles_taken == 9 and winner == False:
@@ -54,8 +51,4 @@ while run:
             game.reset()
             es.CLEAR()
             es.HOME()
-
-end_time = time.time()
-log_file = open("logs.txt", "a")
-log_file.write(f"Time Taken: {round(end_time-start_time, 5)}s\n")
-log_file.close()
+            game.print_game_board("Welcome to Tic-Tac-Toe\nYou are player X\n")

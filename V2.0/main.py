@@ -59,10 +59,10 @@ while ruling == False:
                 break
         game_board[random_x][random_y] = "X"
         tiles_taken += 1
-        if tiles_taken == 9:
-            break
         print_game_board(f"X played ({random_x + 1},{random_y + 1})")
         ruling = check_winning_rules()
+        if tiles_taken == 9:
+            break
         if ruling != False:
             break
         while True:

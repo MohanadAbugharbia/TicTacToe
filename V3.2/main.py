@@ -1,9 +1,9 @@
 import pygame
 from game import Game
-from AI import AI
+from computer import computer_Player
 
 game = Game()
-ai = AI()
+computer = computer_Player()
 run = True
 
 clock = pygame.time.Clock()
@@ -30,8 +30,8 @@ while run:
                                     game.no_winner_draw()
                                     run = False
                                 else:
-                                    ai_move = ai.generate_Move(game)
-                                    game.make_move(ai_move[0], ai_move[1], game.turn)
+                                    computer_move = computer.generate_Move(game)
+                                    game.make_move(computer_move[0], computer_move[1], game.turn)
                                     winner = game.check_for_winner(game.game_board)
                             else:
                                 run = False
