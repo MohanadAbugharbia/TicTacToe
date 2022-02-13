@@ -1,8 +1,5 @@
-import time
 from game import Game
 from AI import AI
-
-start_time = time.time()
 
 game = Game()
 ai = AI()
@@ -35,8 +32,3 @@ else:
     print("Congratulations!")
     print (f"{winner} has won the match!")
     game.print_game_board("Game over")
-
-end_time = time.time()
-log_file = open("logs.txt", "a")
-log_file.write(f"Time Taken: {round(end_time-start_time, 5)}s\n")
-log_file.close()
