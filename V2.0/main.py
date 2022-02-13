@@ -1,6 +1,4 @@
-import time
 import random
-start_time = time.time()
 
 random_choice = random.choice("XO")
 
@@ -75,13 +73,9 @@ while ruling == False:
         game_board[x][y] = "O"
         tiles_taken += 1
         print_game_board(f"O played ({x + 1},{y + 1})")
+    ruling = check_winning_rules()
+
 if ruling == False:
     draw()
 else:
     print_game_board("Game has been won")
-
-
-end_time = time.time()
-log_file = open("logs.txt", "a")
-log_file.write(f"Time Taken: {round(end_time-start_time, 5)}s\n")
-log_file.close()
