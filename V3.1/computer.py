@@ -1,8 +1,6 @@
 import random
-from turtle import pos
-from game import Game
 
-class AI:
+class computer_Player:
 	def __init__(self):
 		self.game_board2 = [1,2,3]
 	

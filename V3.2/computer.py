@@ -1,32 +1,35 @@
 import random
 
-class AI:
+
+class computer_Player:
 	def __init__(self):
 		self.game_board2 = [1,2,3]
 	
-	def make_Move(self, game):
-		# [['0', '1', '2'],
-		#  ['3', '4', '5'],
-		#  ['6', '7', '8']]
-		game_board = game.get_game_board()
-		board = self.generate_AI_board(game_board)
+	def generate_Move(self, game):
+		#game_board = [['0', '1', '2'], 
+		#			 ['3', '4', '5'],
+		#			 ['6', '7', '8']]
+		board = self.game_board_TO_board(game.game_board)
+		#board = [' ', ' ' , ' ',
+		#		 ' ', ' ', ' ', 
+		#		 ' ', ' ', ' ' ]
 		possible_moves = [x for x, letter in enumerate(board) if letter == ' ']
-		move = 0
 
-		for let in ['O', 'X']:
+		for letter in ['O', 'X']:
 			for i in possible_moves:
 				board_copy = board[:]
-				board_copy[i] = let
-				if game.check_for_winner(self.generate_game_board(board_copy)):
+				board_copy[i] = letter
+				if game.check_for_winner(self.board_TO_game_board(board_copy)):
 					move = i
 					return self.move_to_coordinates(move)
-		cornersOpen = []
+
+		free_corners = []
 		#check for open corners
 		for i in possible_moves:
 			if i in [0,2,6,8]:
-				cornersOpen.append(i)
-		if len(cornersOpen) > 0:
-			move = self.selectRandom(cornersOpen)
+				free_corners.append(i)
+		if len(free_corners) > 0:
+			move = self.select_random(free_corners)
 			return self.move_to_coordinates(move)
 
 		#check if center is open
@@ -34,17 +37,18 @@ class AI:
 			move = 4
 			return self.move_to_coordinates(move)
 		
-		edgesOpen = []
+		free_edges = []
 		#check for open edges
 		for i in possible_moves:
 			if i in [1,3,5,7]:
-				edgesOpen.append(i)
-		if len(edgesOpen) > 0:
-			move = self.selectRandom(edgesOpen)
+				free_edges.append(i)
+		if len(free_edges) > 0:
+			move = self.select_random(free_edges)
 			return self.move_to_coordinates(move)
-	def selectRandom(self, list):
-		length = len(list)
-		random_nr = random.randrange(0, length)
+
+	
+	def select_random(self, list):
+		random_nr = random.randrange(0, len(list))
 		return list[random_nr]
 
 	def move_to_coordinates(self, move):
@@ -66,19 +70,20 @@ class AI:
 			return 2, 1
 		if move == 8:
 			return 2, 2
-	def generate_AI_board(self, old_board):
+
+	def game_board_TO_board(self, old_board):
 		new_board = []
 		for i in old_board:
 			for j in i:
 				new_board.append(j)
 		return new_board
 
-	def generate_game_board(self, old_board):
+	def board_TO_game_board(self, old_board):
 		new_board = [[' ' for i in range(3)] for j in range(3)]
 		for i in range(3):
 			for j in range(3):
 				if i != 0:
-					new_board[i][j] = old_board[(i*3)+j]
+					new_board[i][j] = old_board[(i*2)+j+i]
 				else:
 					new_board[i][j] = old_board[j]
 		return new_board
