@@ -1,6 +1,4 @@
 import random
-from turtle import pos
-from game import Game
 
 class AI:
 	def __init__(self):
@@ -44,10 +42,10 @@ class AI:
 		if len(edgesOpen) > 0:
 			move = self.selectRandom(edgesOpen)
 			return self.move_to_coordinates(move)
-	def selectRandom(self, li):
-		ln = len(li)
-		r = random.randrange(0, ln)
-		return li[r]
+	def selectRandom(self, list):
+		length = len(list)
+		random_nr = random.randrange(0, length)
+		return list[random_nr]
 
 	def move_to_coordinates(self, move):
 		if move == 0:

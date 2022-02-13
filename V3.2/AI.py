@@ -48,8 +48,8 @@ class AI:
 
 	
 	def select_random(self, list):
-		rand = random.randrange(0, len(list))
-		return list[rand]
+		random_nr = random.randrange(0, len(list))
+		return list[random_nr]
 
 	def move_to_coordinates(self, move):
 		if move == 0:
