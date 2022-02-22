@@ -36,6 +36,8 @@ while run:
                             else:
                                 run = False
                                 break
+        else:
+            run = False
     clock.tick(20)
     game.draw()
     pygame.display.flip()
