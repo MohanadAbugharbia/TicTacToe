@@ -1,8 +1,9 @@
 import socket
 from threading import Thread
+from base_game.base_game import Base_Game
 
-class game_session:
-	def __init__(self, player1: socket.socket, player2: socket.socket):
+class Server(Base_Game):
+	def __init__(self, player1: socket.socket, player2: socket.socket) -> None:
 		self.game_board = [[" " for i in range(3)] for j in range(3)]
 		self.player1 = player1
 		self.player2 = player2
@@ -43,29 +44,6 @@ class game_session:
 		player2.close()
 		print("Clients disconnected")
 
-	def check_winner(self) -> str:
-		if self.game_board[0][0] == self.game_board[1][1] == self.game_board[2][2] != " ":
-			self.winner = self.game_board[0][0]
-		elif self.game_board[0][2] == self.game_board[1][1] == self.game_board[2][0] != " ":
-			self.winner = self.game_board[0][2]
-		else:
-			for x in range(3):
-				if self.game_board[x][0] == self.game_board[x][1] == self.game_board[x][2] != " ":
-					self.winner = self.game_board[x][0]
-					break
-				elif self.game_board[0][x] == self.game_board[1][x] == self.game_board[2][x] != " ":
-					self.winner = self.game_board[0][x]
-					break
-		return self.winner
-
-
-	def get_winner(self) -> str:
-		if self.winner != ' ':
-			return self.check_winner()
-		else:
-			return self.winner
-
-
 	def write_to_game_board(self, x: int, y: int, player: chr) -> None:
 		if self.game_board[x][y] == " ":
 			self.game_board[x][y] = player
@@ -85,11 +63,11 @@ def create_thread(target, args) -> Thread:
 	return thread
 
 def start_session(player1: socket.socket, player2: socket.socket) -> Thread:
-	return create_thread(game_session, [player1, player2])
+	return create_thread(Server, [player1, player2])
 
 if __name__ == "__main__":
 
-	host = '127.0.0.1'
+	host = '0.0.0.0'
 	port = 5555
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
