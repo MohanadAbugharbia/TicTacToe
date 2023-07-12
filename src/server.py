@@ -1,9 +1,10 @@
 import socket
 from threading import Thread
 from base_game.base_game import Base_Game
+from base_game.protocols import Socket_Protocol
 
 class Server(Base_Game):
-	def __init__(self, player1: socket.socket, player2: socket.socket) -> None:
+	def __init__(self, player1: Socket_Protocol, player2: Socket_Protocol) -> None:
 		self.game_board = [[" " for i in range(3)] for j in range(3)]
 		self.player1 = player1
 		self.player2 = player2
